@@ -2,6 +2,7 @@ import hashlib
 import os
 import json
 
+#Calculates hash of file content
 def hash_file(filepath):
     sha256 = hashlib.sha256()
     with open(filepath, "rb") as file:
@@ -9,6 +10,7 @@ def hash_file(filepath):
             sha256.update(chunk)
     return sha256.hexdigest()
 
+#Navigates to directory entered by user
 def traverse_directory(directory):
     hashes = {}
 
@@ -20,6 +22,7 @@ def traverse_directory(directory):
             hashes[filepath]=hash_file(filepath)
     return hashes
 
+#Makes hash table with given information
 def generate_table():
     directory = input("Please enter desired directory path: ")
     hashes = traverse_directory(directory)
@@ -27,6 +30,7 @@ def generate_table():
         json.dump(hashes, file, indent=4)
     print("Hash table has been generated")
 
+#Returns validity messages based on status of files
 def validate_hash():
     with open("hash_table.json", "r") as file:
         stored_hashes = json.load(file)
